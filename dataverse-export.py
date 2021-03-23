@@ -3,7 +3,7 @@ import requests  # http://docs.python-requests.org/en/master/
 import os
 
 dataverse_server = 'https://dataverse01.geus.dk' # no trailing slash
-api_key = 'bcaf095b-3620-40b5-b77c-4b8af1eb9f70'
+api_key = '***********'
 # persistentId = 'doi:10.22008/FK2/8EYJSN' # deaccessioned dataset
 persistentId = 'doi:10.22008/FK2/B674AR' # toa dataset
 # persistentId = 'doi:10.22008/FK2/OIAJVO' # snow characteristics
