@@ -54,10 +54,10 @@ def upload_files_in_folder(InputFolder, file_list, file_description, overwrite =
     for folder in folder_list:
         for file in file_list:
             # Checking if the file exist
-            filename = os.path.basename(os.path.normpath(folder_list[0]))+'/'+file
+            filename = os.path.basename(os.path.normpath(folder))+'/'+file
             if not overwrite:
                 if filename in files_DV_list:
-                    print('skipping ',os.path.basename(os.path.normpath(folder_list[0]))+'/'+file)
+                    print('skipping ',os.path.basename(os.path.normpath(folder))+'/'+file)
                     continue
             try: 
                 files = {'file': open(folder+'/' +file, "rb")}
@@ -66,14 +66,14 @@ def upload_files_in_folder(InputFolder, file_list, file_description, overwrite =
                 continue
                 
             params = dict(description=file_description,
-                        directoryLabel=os.path.basename(os.path.normpath(folder_list[0])))
+                        directoryLabel=os.path.basename(os.path.normpath(folder)))
             
             params_as_json_string = json.dumps(params)
             
             payload = dict(jsonData=params_as_json_string)
     
             url_persistent_id = '%s/api/datasets/:persistentId/add?persistentId=%s&key=%s' % (dataverse_server, persistentId, api_key)
-            print('uploading ',os.path.basename(os.path.normpath(folder_list[0]))+'/'+file)
+            print('uploading ',os.path.basename(os.path.normpath(folder))+'/'+file)
             r = requests.post(url_persistent_id, data=payload, files=files)
             
             print(r.json()['status'])
@@ -92,8 +92,9 @@ flag = 'not done'
 while flag != 'done':
    try:
        flag = upload_files_in_folder(InputFolder, file_list, file_description, overwrite = False)
-   except:
-       print('error, starting again')
+   except Exception as e:
+       print(e)
+       print('... starting again')
        time.sleep(5)
 
  #%% Example 3: Updatinge metadata files
